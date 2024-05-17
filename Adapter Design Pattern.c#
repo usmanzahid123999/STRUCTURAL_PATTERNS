@@ -1,0 +1,66 @@
+using System;
+
+namespace Adapter.Structural
+{
+    /// <summary>
+    /// Adapter Design Pattern
+    /// </summary>
+
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            // Create adapter and place a request
+            Target target1 = new Target();
+            target1.Request();
+            Target target = new Adapter();
+            target.Request();
+
+            // Wait for user
+
+            Console.ReadKey();
+        }
+
+    }
+
+    /// <summary>
+    /// The 'Target' class
+    /// </summary>
+
+    public class Target
+    {
+        public virtual void Request()
+        {
+            Console.WriteLine("user want to work in 'jpeg' format --target class work");
+        }
+    }
+
+    /// <summary>
+    /// The 'Adapter' class
+    /// </summary>
+
+    public class Adapter : Target //inheriting class target
+    {
+        private Adaptee adaptee = new Adaptee();
+
+        public override void Request()
+        {
+            // Possibly do some other work
+            // and then call SpecificRequest
+            Console.WriteLine("adapter is now connecting 'target' and 'adaptee' and two different format --adapter class work");
+            adaptee.SpecificRequest();
+        }
+    }
+
+    /// <summary>
+    /// The 'Adaptee' class
+    /// </summary>
+
+    public class Adaptee
+    {
+        public void SpecificRequest()
+        {
+            Console.WriteLine("adatper work is done to work in pdf format --adaptee class work");
+        }
+    }
+}
