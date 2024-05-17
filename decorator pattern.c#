@@ -1,0 +1,119 @@
+using System;
+
+namespace decorator
+{
+    public interface flashlight
+   {
+       void flashon();
+       
+       void flashoff();
+   }
+   
+   class mobile : flashlight
+   {
+       public void flashon()
+       {
+           Console.WriteLine("flashlight is on");
+       }
+       
+       public void flashoff()
+       {
+           Console.WriteLine("flashlight is off");
+       }
+   }
+   
+   
+ public  class flash_decorator : flashlight
+   {
+       public flashlight f1;
+       
+       public flash_decorator(flashlight f1)
+       {
+          this.f1 = f1; 
+       }
+       
+       public virtual void flashon()
+       {
+           f1.flashon();
+       }
+       public virtual void flashoff()
+       {
+           f1.flashoff();
+       }
+       
+       
+   }
+   
+   
+   public class concrete_decorator : flash_decorator
+   {
+       public concrete_decorator(flashlight f1) : base(f1)
+       {
+           f1 = base.f1;
+       }
+       public override void flashon()
+       {
+           f1.flashon();
+           setRingtone(f1);
+           setEffect(f1);
+           
+       }
+       private void setRingtone(flashlight f1)
+       {
+           Console.WriteLine("RINGTONE: the ringtone for the falshlight has been set");
+       }
+       private void setEffect(flashlight f1)
+       {
+Console.WriteLine("EFFECT: the effect for the falshlight has been set");
+  
+       }
+       
+       public override void flashoff()
+       {
+           f1.flashoff();
+           
+       }
+   }
+   
+   
+   
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            
+            flashlight mobile = new mobile();
+            flashlight decorations = new concrete_decorator(new mobile());
+          Console.WriteLine("select one opt");
+          Console.WriteLine("1 for flashlight decorated");
+          Console.WriteLine("2 for turnoff flashlight off");
+          Console.WriteLine("3 for turn on light without decoration ");
+          int inp = int.Parse(Console.ReadLine());
+          if(inp==1)
+          {
+                Console.WriteLine("flashlight on with decorations");
+          decorations.flashon();
+              
+              
+          }
+          else if (inp ==2)
+          {
+              decorations.flashoff();
+          }
+          else if (inp==3)
+          {
+              mobile.flashon();
+          }
+          else
+          {
+              Console.WriteLine("invalid info");
+          }
+
+
+            Console.ReadKey();
+        }
+
+    }
+
+    
+}
